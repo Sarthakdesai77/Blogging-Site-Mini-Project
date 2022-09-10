@@ -9,7 +9,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-
 mongoose
   .connect(
     process.env.DB_LINK,
