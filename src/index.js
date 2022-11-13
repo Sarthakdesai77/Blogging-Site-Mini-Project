@@ -1,4 +1,3 @@
-require('dotenv').config()
 const express = require('express');
 const bodyParser = require('body-parser');
 const route = require('./routes/route.js');
@@ -11,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 mongoose
   .connect(
-    process.env.DB_LINK,
+    "mongodb+srv://harsh-developer:aA12345678@cluster0.lxbes.mongodb.net/Project-blogs?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
     }

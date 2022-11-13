@@ -44,7 +44,7 @@ const createAuthor = async function (req, res) {
 
     if (!authorData.email)
       return res.status(400).send({ status: false, msg: 'email required' });
-      
+
     if (!mailRegex.test(authorData.email)) {
       return res.status(400).send({ msg: 'Please enter valid mailId' });
     }
@@ -64,6 +64,7 @@ const createAuthor = async function (req, res) {
     const savedData = await AuthorModel.create(authorData);
 
     res.status(201).send({ status: true, msg: savedData });
+
   } catch (err) {
     res.status(500).send({ status: false, msg: err.message });
   }
@@ -103,6 +104,7 @@ const loginAuthor = async function (req, res) {
     );
     res.setHeader('x-api-key', token);
     res.status(200).send({ status: true, token: token });
+    
   } catch (err) {
     res.status(500).send({ status: false, msg: err.message });
   }

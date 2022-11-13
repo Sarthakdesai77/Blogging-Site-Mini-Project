@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-
 const BlogModel = require('../models/blogModel');
 
 //------------------------------------------------------------------------------------------//
@@ -12,11 +11,14 @@ const authenticate = function (req, res, next) {
         .status(400)
         .send({ status: false, msg: 'token must be present' });
 
-    let decodedToken = jwt.verify(token, 'group-21');
-    if (!decodedToken)
-      return res.status(401).send({ status: false, msg: 'token is not valid' });
-
-    next();
+    jwt.verify(token, "group-21", function (err, decoded) {
+      if (err) {
+          return res.status(401).send({ status: false, message: err.message })
+      } else {
+          req.decodedToken = decoded
+          next()
+      }
+  })
   } catch (err) {
     res.status(500).send({ Status: false, msg: err.message });
   }
@@ -30,7 +32,7 @@ const authorise = async function (req, res, next) {
 
     let blogId = req.params.blogId;
 
-    let decodedToken = jwt.verify(token, 'group-21');
+    let decodedToken = req.decodedToken;
 
     let authorId = decodedToken.authorId;
 
